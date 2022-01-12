@@ -1,6 +1,6 @@
 function logger(req, res, next) {
-  const time = Date.now().toLocaleString()
-  console.log(time, req.method, )
+  const time = new Date().toLocaleString()
+  console.log(time, req.method, req.originalUrl, )
   next()
 }
 
