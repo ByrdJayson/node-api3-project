@@ -1,17 +1,31 @@
 function logger(req, res, next) {
-  // DO YOUR MAGIC
+  const time = Date.now().toLocaleString()
+  console.log(time, req.method, )
+  next()
 }
 
 function validateUserId(req, res, next) {
-  // DO YOUR MAGIC
+  console.log('scaffolding log')
+  next()
+  
 }
 
 function validateUser(req, res, next) {
-  // DO YOUR MAGIC
+  console.log('scaffolding log')
+  next()
+  
 }
 
 function validatePost(req, res, next) {
-  // DO YOUR MAGIC
+  console.log('scaffolding log')
+  next()
+  
 }
 
 // do not forget to expose these functions to other modules
+module.exports = {
+  logger,
+  validatePost,
+  validateUser,
+  validateUserId
+}
