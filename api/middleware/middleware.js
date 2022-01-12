@@ -2,33 +2,45 @@ const User = require('../users/users-model')
 
 function logger(req, res, next) {
   const time = new Date().toLocaleString()
-  console.log(time, req.method, req.originalUrl, )
+  console.log(time, req.method, req.url, )
   next()
 }
 
 async function validateUserId(req, res, next) {
-  try {
-    const user = await User.getById(req.params.id)
-    if(!user){
-      res.status(404).json({message: "User does not exist"})
-    } else {
+  const { id } = req.params
+  User.getById(id)
+  .then(user => {
+    if(user){
       req.user = user
+      next()
+    } else {
+      res.status(404).json({message: "user not found"})
     }
-  } catch (err) {
-    next({status: 500, message: "Internal Error"})
-  }
+  })
+  .catch(next)
 }
 
 function validateUser(req, res, next) {
-  console.log('scaffolding log')
-  next()
+  const { name } = req.body
+
+  if(!name){
+    res.status(400).json({message: "missing required name field"})
+  } else {
+    req.name = name
+    next()
+  }
   
 }
 
 function validatePost(req, res, next) {
-  console.log('scaffolding log')
-  next()
-  
+  const { text } = req.body
+
+  if(!text) {
+    res.status(400).json({message: "missing required text field"})
+  } else {
+    next()
+  }
+
 }
 
 // do not forget to expose these functions to other modules
